@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- 使用thymeleaf，配置相应的 -->
+<html xmlns:th="http://www.thymeleaf.org">  <!-- th!!! 命名空间使用 -->
+<head>
+<meta charset="UTF-8"/><!--<meta charset="UTF-8" />  thymeleaf模板引擎默认是Template modes:HTML5解析的，所以解析比较严格。  -->
+<title>订单详情</title>
+	<!-- thymeleaf引入静态资源的方式，@加大括弧    "/" 代表static路径-->
+	<!-- jquery -->
+	<!-- <script type="text/javascript" th:src="@{/js/jequery.min.js}"></script> -->
+	<script type="text/javascript" th:src="@{/jquery-validation/lib/jquery-1.11.1.js}"></script>
+	<!-- bootstrap -->
+	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"/>
+	 -->
+	<link type="text/css" rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}"/>
+	<script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+	<div class="panel panel-default">
+		<div class="panel-heading">秒杀订单详情</div>
+		<table class="table" id="goodslist">
+		<tr>
+			<td>商品名称</td>
+			<td colspan="3" th:text="${goods.goodsName}"></td>
+		</tr>
+		<tr>
+			<td>商品图片</td>
+			<td colspan="2"><img th:src="@{${goods.goodsImg}}" width="80" height="60"></img></td>
+		</tr>
+		<tr>
+			<td>订单原价</td>
+			<td colspan="3" th:text="${orderinfo.goodsPrice}"></td>
+		</tr>
+		<tr>
+			<td>下单时间</td>
+			<td th:text="${#dates.format(orderinfo.createDate,'yyyy-MM-dd HH:mm:ss')}" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>订单状态</td>
+			<td><!-- 根据数值，做显示判断 -->
+				<span th:if="${orderinfo.orderStatus eq 0}">未支付</span>
+				<span th:if="${orderinfo.orderStatus eq 1}">代发货</span>
+				<span th:if="${orderinfo.orderStatus eq 2}">已发货</span>
+				<span th:if="${orderinfo.orderStatus == 3}">已收货</span>
+				<span th:if="${orderinfo.orderStatus == 4}">已退款</span>
+				<span th:if="${orderinfo.orderStatus == 5}">已完成</span>
+			</td>
+			<td>						<!-- 如果上面是未支付，那么下面会生成一个立即支付的按钮 -->
+				<button class="btn btn-primary btn-block" type="submit" id="payButton">立即支付</button>
+			</td>
+		</tr>
+		<tr>
+			<td>收货人</td>
+			<td colspan="2">tom  15008484456</td>
+		</tr>
+		<tr>
+			<td>收货地址</td>
+			<td colspan="2">四川崇州市</td>
+		</tr>
+		</table>
+	</div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- 使用thymeleaf，配置相应的 -->
+<html xmlns:th="http://www.thymeleaf.org">  <!-- th!!! 命名空间使用 -->
+<head>
+<meta charset="UTF-8"/><!--<meta charset="UTF-8" />  thymeleaf模板引擎默认是Template modes:HTML5解析的，所以解析比较严格。  -->
+<title>商品列表</title>
+	<!-- thymeleaf引入静态资源的方式，@加大括弧    "/" 代表static路径-->
+	<!-- jquery -->
+	<!-- <script type="text/javascript" th:src="@{/js/jequery.min.js}"></script> -->
+	<script type="text/javascript" th:src="@{/jquery-validation/lib/jquery-1.11.1.js}"></script>
+	<!-- bootstrap -->
+	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"/>
+	 -->
+	<link type="text/css" rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}"/>
+	<script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+	<div class="panel panel-default">
+		<div class="panel-heading">秒杀商品详情</div>
+		<div class="panel-body"> 
+			<span th:if="${user eq null}">您还没有登录，请登录后再操作</span>
+			<span>没有收货地址的提示。。。</span>
+		</div>
+		<table class="table" id="goodslist">
+		<tr>
+			<td>商品名称</td>
+			<td colspan="3" th:text="${goods.goodsName}"></td>
+		</tr>
+		<tr>
+			<td>商品图片</td>
+			<td colspan="3"><img th:src="@{${goods.goodsImg}}" width="80" height="60"></img></td>
+		</tr>
+		<tr>
+			<td>秒杀开始时间</td>
+			<td th:text="${#dates.format(goods.startDate,'yyyy-MM-dd HH:mm:ss')}"></td>
+			<td id="miaoshaTip">
+				<!-- 先取得这个时间 -->
+				<input type="hidden" id="remailSeconds" th:value="${remailSeconds}"></input>
+			
+				<span th:if="${status eq 0}">秒杀还未开始，倒计时:<span id="countDown" th:text="${remailSeconds}"></span>秒</span> 
+				<span th:if="${status eq 1}">秒杀正在进行</span> 
+				<span th:if="${status eq 2}">秒杀已经结束</span> 
+			</td>
+			<td>
+				<form id="miaoshaForm" method="post" action="/miaosha/do_miaosha">
+					<button class="btn btn-primary btn-block" type="submit" id="buyButton">立即秒杀</button>
+					<input type="hidden" name="goodsId" th:value="${goods.id}"></input>
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>商品原价</td>
+			<td colspan="3" th:text="${goods.goodsPrice}"></td>
+		</tr>
+		<tr>
+			<td>秒杀价</td>
+			<td colspan="3" th:text="${goods.miaoshaPrice}"></td>
+		</tr>
+		<tr>
+			<td>库存数量</td>
+			<td colspan="3" th:text="${goods.stockCount}"></td>
+		</tr>
+		
+		</table>
+	</div>
+	
+</body>
+<script type="text/javascript">
+	$(function(){
+		countDown();
+	});
+	function countDown(){
+		//获取秒杀倒计时进行判断，0-->正在进行秒杀,-1-->秒杀结束,remailSeconds>0-->代表倒计时
+		var remailSeconds=$("#remailSeconds").val();
+		//alert("remailSeconds:"+remailSeconds);
+		var timeout;
+		
+		if(remailSeconds>0){//秒杀还没有开始，进行倒计时功能
+			$("#buyButton").attr("disabled",true);
+			//倒计时
+			timeout=setTimeout(function(){
+				$("#countDown").text(remailSeconds-1);
+				$("#remailSeconds").val(remailSeconds-1);//remailSeconds这是input
+				countDown();
+			},1000);//一秒钟之后回调函数
+			
+		}else if(remailSeconds==0){//正在进行秒杀
+			$("#buyButton").attr("disabled",false);
+			if(timeout){//如果timeout有值的情况
+				clearTimeout(timeout);
+			}
+			//将文案修改 df1fab4272a24cdf9432adb9fd69cb38
+			$("#miaoshaTip").html("秒杀进行中");
+		}else{
+			//小于0的情况，秒杀结束，将秒杀按钮设置为不可点击
+			$("#buyButton").attr("disabled",true);
+			$("#miaoshaTip").html("秒杀结束");
+		}
+	}
+</script>
+</html>

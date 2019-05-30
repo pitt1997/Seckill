@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!-- 使用thymeleaf，配置相应的 -->
+<html xmlns:th="http://www.thymeleaf.org">  <!-- th!!! 命名空间使用 -->
+<head>
+<meta charset="UTF-8"/><!--<meta charset="UTF-8" />  thymeleaf模板引擎默认是Template modes:HTML5解析的，所以解析比较严格。  -->
+<title>秒杀失败</title>
+	<!-- thymeleaf引入静态资源的方式，@加大括弧    "/" 代表static路径-->
+	<!-- jquery -->
+	<!-- <script type="text/javascript" th:src="@{/js/jequery.min.js}"></script> -->
+	<script type="text/javascript" th:src="@{/jquery-validation/lib/jquery-1.11.1.js}"></script>
+	<!-- bootstrap -->
+	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"/>
+	 -->
+	<link type="text/css" rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}"/>
+	<script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+	秒杀失败:
+	<p th:text="${errorMessage}"></p>
+</body>
+
+</html>

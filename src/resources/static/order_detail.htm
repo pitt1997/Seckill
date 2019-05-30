@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>  
+<head>
+<meta charset="UTF-8"/><!--<meta charset="UTF-8" />  thymeleaf模板引擎默认是Template modes:HTML5解析的，所以解析比较严格。  -->
+<title>订单详情</title>
+	<!-- thymeleaf引入静态资源的方式，@加大括弧    "/" 代表static路径-->
+	<!-- jquery -->
+	<!-- <script type="text/javascript" src="/js/jequery.min.js}"></script> -->
+	<script type="text/javascript" src="/jquery-validation/lib/jquery-1.11.1.js"></script>
+	<!-- bootstrap -->
+	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"/>
+	 -->
+	<link type="text/css" rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div class="panel panel-default">
+		<div class="panel-heading">秒杀订单详情</div>
+		<table class="table" id="goodslist">
+		<tr>
+			<td>商品名称</td>
+			<td colspan="3" id="goodsName"></td>
+		</tr>
+		<tr>
+			<td>商品图片</td>
+			<td colspan="2"><img id="goodsImg" width="80" height="60"></img></td>
+		</tr>
+		<tr>
+			<td>订单原价</td>
+			<td colspan="3" id="goodsPrice"></td>
+		</tr>
+		<tr>
+			<td>下单时间</td>
+			<td id="createDate" colspan="2"></td>
+		</tr>
+		<tr>
+			<td>订单状态</td>
+			<td id="orderStatus"><!-- 根据数值，做显示判断 -->
+			</td>
+			<td>						<!-- 如果上面是未支付，那么下面会生成一个立即支付的按钮 -->
+				<button class="btn btn-primary btn-block" type="submit" id="payButton">立即支付</button>
+			</td>
+		</tr>
+		<tr>
+			<td>收货人</td>
+			<td colspan="2">tom  15008484456</td>
+		</tr>
+		<tr>
+			<td>收货地址</td>
+			<td colspan="2">四川崇州市</td>
+		</tr>
+		</table>
+	</div>
+</body>
+<script type="text/javascript">
+	
+	$(function(){
+		getOrderDetail();
+	});
+
+	function getOrderDetail() {
+		//取参数orderId
+		var orderId=getQueryString("orderId");
+		$.ajax({
+			url : "/order/detail",
+			type : "GET",
+			data : {
+				orderId :orderId
+
+			},
+			success : function(data) {
+				if (data.code == 0) {
+					render(data.data);
+				} else {
+					layer.msg(data.msg);
+				}
+			},
+			error : function() {
+				layer.msg("请求有误！");
+			}
+		//token如果cookie里面有，会自己带过去
+
+		});
+	}
+	//渲染页面--------5-17
+	function render(detail){
+		//alert(detail.status);
+		var goods=detail.goodsVo;
+		var order=detail.order;
+		$("#goodsName").text(goods.goodsName);
+		$("#goodsImg").attr("src",goods.goodsImg); 
+		$("#goodsPrice").text(order.goodsPrice);	
+		$("#createDate").text(order.createDate);
+		//判断订单的状态orderStatus
+		var status="";
+		if(order.orderStatus==0){
+			$("#orderStatus").text("未支付");
+		}else if(order.orderStatus==1){
+			$("#orderStatus").text("待发货");
+		}else if(order.orderStatus==2){
+			$("#orderStatus").text("已发货");
+		}else if(order.orderStatus==3){
+			$("#orderStatus").text("待收货");
+		}
+		
+	}
+		
+	//获取请求路径里面的参数
+	function getQueryString(name){
+		var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");
+		var r=window.location.search.substr(1).match(reg);
+		if(r!=null){
+			return unescape(r[2]);
+		}
+		return null;
+	}
+</script>
+</html>

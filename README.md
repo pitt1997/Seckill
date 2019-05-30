@@ -56,3 +56,6 @@ IntelliJ IDEA 2017.3.1 x64
 
 ![Image text](https://github.com/pitt1997/miaosha_idea/blob/master/showimgs/miaoshasuccess.png)
 
+## 更多知识
+个人博客： https://blog.csdn.net/brad_pitt7
+

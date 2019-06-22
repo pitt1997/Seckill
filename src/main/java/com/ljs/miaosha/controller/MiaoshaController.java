@@ -184,7 +184,7 @@ public class MiaoshaController implements InitializingBean{
 		//2.预减少库存，减少redis里面的库存
 		long stock=redisService.decr(GoodsKey.getMiaoshaGoodsStock,""+goodsId);
 		//3.判断减少数量1之后的stock，区别于查数据库时候的stock<=0
-		if(stock<0) {//线程不安全---失败			库存至临界值1的时候，此时刚好来了加入10个线程，那么库存就会-10
+		if(stock<0) {
 			return Result.error(CodeMsg.MIAOSHA_OVER_ERROR);
 		}
 		//4.判断这个秒杀订单形成没有，判断是否已经秒杀到了，避免一个账户秒杀多个商品

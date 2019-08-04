@@ -208,7 +208,7 @@ public class MiaoshaController implements InitializingBean{
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping("/do_miaosha")//传入user对象啊，不然怎么取user的值，${user.nickname}
+	@RequestMapping("/do_miaosha")
 	public String toList(Model model,MiaoshaUser user,@RequestParam("goodsId") Long goodsId) {
 		model.addAttribute("user", user);
 		//如果用户为空，则返回至登录页面

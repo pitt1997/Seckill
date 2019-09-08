@@ -42,7 +42,7 @@ public class GoodsController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping("/to_list_noCache")//传入user对象啊，不然怎么取user的值，${user.nickname}
+	@RequestMapping("/to_list_noCache")
 	public String toListnoCache(Model model,MiaoshaUser user) {
 		model.addAttribute("user", user);
 		//查询商品列表
@@ -57,7 +57,7 @@ public class GoodsController {
 	 * QPS 1201.923076923077
 	 */
 	//5-17
-	@RequestMapping(value="/to_list",produces="text/html")//传入user对象啊，不然怎么取user的值，${user.nickname}
+	@RequestMapping(value="/to_list",produces="text/html")
 	@ResponseBody
 	public String toListCache(Model model,MiaoshaUser user,HttpServletRequest request,
 			HttpServletResponse response) {
@@ -233,7 +233,7 @@ public class GoodsController {
 	 * @return
 	 */
 	
-	@RequestMapping("/to_detail1")//传入user对象啊，不然怎么取user的值，${user.nickname}
+	@RequestMapping("/to_detail1")
 	public String toDetail(Model model,@CookieValue(value=MiaoshaUserService.COOKIE1_NAME_TOKEN)String cookieToken
 			,HttpServletResponse response) {
 		//通过取到cookie，首先取@RequestParam没有再去取@CookieValue
@@ -247,7 +247,7 @@ public class GoodsController {
 		model.addAttribute("user", user);
 		return "goods_list";//返回页面login
 	}
-	@RequestMapping("/to_list1")//传入user对象啊，不然怎么取user的值，${user.nickname}
+	@RequestMapping("/to_list1")
 	public String toList(Model model,@CookieValue(value=MiaoshaUserService.COOKIE1_NAME_TOKEN)String cookieToken
 			,HttpServletResponse response) {
 		//通过取到cookie，首先取@RequestParam没有再去取@CookieValue
@@ -263,7 +263,7 @@ public class GoodsController {
 		return "goods_list";//返回页面login
 	}
 	
-	@RequestMapping("/to_list2")//传入user对象啊，不然怎么取user的值，${user.nickname}
+	@RequestMapping("/to_list2")
 	public String toLogin(Model model,@CookieValue(value=MiaoshaUserService.COOKIE1_NAME_TOKEN)String cookieToken,
 			@RequestParam(value=MiaoshaUserService.COOKIE1_NAME_TOKEN)String paramToken,HttpServletResponse response) {
 		//通过取到cookie，首先取@RequestParam没有再去取@CookieValue

@@ -39,8 +39,8 @@
 			<td>
 				<div class="row">
 					<div class="form-inline">
-						<img id="vertifyCodeImg" width="80" height="30" style="display:none" onclick="refreshVCode()"></img><!-- 验证码图片 -->
-						<input id="vertifyCode" class="form-control" style="display:none"></input>
+						<img id="verifyCodeImg" width="80" height="30" style="display:none" onclick="refreshVCode()"></img><!-- 验证码图片 -->
+						<input id="verifyCode" class="form-control" style="display:none"></input>
 						<button class="btn btn-primary" type="button" id="buyButton" onclick="getMiaoshaPath()">立即秒杀</button>
 					</div>
 				</div>
@@ -52,7 +52,7 @@
 		</tr>
 		<tr>
 			<td>秒杀价</td>
-			<td colspan="3" id="miaoshaPrice"></td>
+			<td colspan="3" id="seckillPrice"></td>
 		</tr>
 		<tr>
 			<td>库存数量</td>
@@ -71,11 +71,11 @@
 	function getMiaoshaPath() {
 		var goodsId = $("#goodsId").val();
 		$.ajax({
-			url : "/miaosha/getPath",
+			url : "/seckill/getPath",
 			type : "GET",
 			data : {
 				goodsId : goodsId,
-				vertifyCode:$("#vertifyCode").val()
+				verifyCode:$("#verifyCode").val()
 			},
 			success : function(data) {
 				if (data.code == 0) {
@@ -96,7 +96,7 @@
 	//做轮询
 	function getMiaoshaResult(goodsId) {
 		$.ajax({
-			url : "/miaosha/result",
+			url : "/seckill/result",
 			type : "GET",
 			data : {
 				goodsId : $("#goodsId").val()
@@ -139,7 +139,7 @@
 		alert(path);
 		alert("秒杀!");
 		$.ajax({
-			url : "/miaosha/" + path + "/do_miaosha_ajaxcache",
+			url : "/seckill/" + path + "/do_miaosha_ajaxcache",
 			type : "POST",
 			data : {
 				goodsId : $("#goodsId").val()
@@ -178,7 +178,7 @@
 		$("#remailSeconds").val(remailSeconds);
 		$("#goodsId").val(goods.id);
 		$("#goodsPrice").text(goods.goodsPrice); //goodsStock----- stockCount
-		$("#miaoshaPrice").text(goods.miaoshaPrice);
+		$("#seckillPrice").text(goods.seckillPrice);
 		$("#stockCount").text(goods.goodsStock);
 		countDown();
 	}
@@ -214,7 +214,7 @@
 	}
 	//刷新验证码,浏览器具有缓存---所以加一个参数
 	function refreshVCode(){
-		$("#vertifyCodeImg").attr("src","/miaosha/vertifyCode?goodsId="+$("#goodsId").val()+"&timestamp="+new Date().getTime());
+		$("#verifyCodeImg").attr("src","/seckill/verifyCode?goodsId="+$("#goodsId").val()+"&timestamp="+new Date().getTime());
 	}
 	function countDown() {
 		//获取秒杀倒计时进行判断，0-->正在进行秒杀,-1-->秒杀结束,remailSeconds>0-->代表倒计时
@@ -239,17 +239,17 @@
 			//将文案修改 df1fab4272a24cdf9432adb9fd69cb38
 			$("#miaoshaTip").html("秒杀进行中");
 			//添加验证码
-			$("#vertifyCodeImg").attr("src","/miaosha/vertifyCode?goodsId="+$("#goodsId").val());
-			$("#vertifyCodeImg").show();
-			$("#vertifyCode").show();
+			$("#verifyCodeImg").attr("src","/seckill/verifyCode?goodsId="+$("#goodsId").val());
+			$("#verifyCodeImg").show();
+			$("#verifyCode").show();
 			
 		} else {
 			//小于0的情况，秒杀结束，将秒杀按钮设置为不可点击
 			$("#buyButton").attr("disabled", true);
 			$("#miaoshaTip").html("秒杀结束");
 			//隐藏验证码
-			$("#vertifyCodeImg").hide();
-			$("#vertifyCode").hide();
+			$("#verifyCodeImg").hide();
+			$("#verifyCode").hide();
 		}
 	}
 </script>

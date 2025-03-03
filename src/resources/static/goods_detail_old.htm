@@ -44,7 +44,7 @@
 				<span id="miaoshaTip"></span>				
 			</td>
 			<td>
-				<!-- <form id="miaoshaForm" method="post" action="/miaosha/do_miaosha">
+				<!-- <form id="miaoshaForm" method="post" action="/seckill/do_miaosha">
 					<button class="btn btn-primary btn-block" type="submit" id="buyButton">立即秒杀</button>
 					<input type="hidden" name="goodsId" id="goodsId"></input>
 				</form> -->
@@ -58,7 +58,7 @@
 		</tr>
 		<tr>
 			<td>秒杀价</td>
-			<td colspan="3" id="miaoshaPrice"></td>
+			<td colspan="3" id="seckillPrice"></td>
 		</tr>
 		<tr>
 			<td>库存数量</td>
@@ -78,7 +78,7 @@
 	//做轮询
 	function getMiaoshaResult(goodsId){
 		$.ajax({
-			url:"/miaosha/result",
+			url:"/seckill/result",
 			type:"GET",
 			data:{
 				goodsId:$("#goodsId").val()
@@ -121,7 +121,7 @@
 	function doMiaosha(){
 		alert("秒杀!");
 		$.ajax({
-			url:"/miaosha/do_miaosha_ajaxcache",
+			url:"/seckill/do_miaosha_ajaxcache",
 			type:"POST",
 			data:{
 				goodsId:$("#goodsId").val()
@@ -166,7 +166,7 @@
 		$("#remailSeconds").val(remailSeconds);
 		$("#goodsId").val(goods.id);
 		$("#goodsPrice").text(goods.goodsPrice);		//goodsStock----- stockCount
-		$("#miaoshaPrice").text(goods.miaoshaPrice);
+		$("#seckillPrice").text(goods.seckillPrice);
 		$("#stockCount").text(goods.goodsStock);
 		countDown();
 	}

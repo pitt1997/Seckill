@@ -25,7 +25,7 @@ IntelliJ IDEA 2017.3.1 x64
 8. 商品秒杀列表地址：http://localhost:8080/goods/to_list
 
 ## 其它说明
-1. 数据库共有一千个用户左右（手机号：15200000000~15200000997 密码为：123456），为压测准备的。（使用 com.ljs.miaosha.util.UserUtil.java该类生成的，生成token做压测的方法也是在此类里面）
+1. 数据库共有一千个用户左右（手机号：15200000000~15200000997 密码为：123456），为压测准备的。（使用 com.lijs.miaosha.util.UserUtil.java该类生成的，生成token做压测的方法也是在此类里面）
 
 2. 邮箱只实现了前端格式验证，只需输入一个正确的邮箱格式即可（例如：yys@qq.com）
 
@@ -39,23 +39,23 @@ IntelliJ IDEA 2017.3.1 x64
 ## 图片演示
 登录页面
 
-![Image text](https://github.com/pitt1997/miaosha_idea/blob/master/showimgs/login.png)
+![Image text](https://github.com/pitt1997/seckill_idea/blob/master/showimgs/login.png)
 
 商品列表页面
 
-![Image text](https://github.com/pitt1997/miaosha_idea/blob/master/showimgs/list.png)
+![Image text](https://github.com/pitt1997/seckill_idea/blob/master/showimgs/list.png)
 
 商品详情页面
 
-![Image text](https://github.com/pitt1997/miaosha_idea/blob/master/showimgs/goodsdetail.png)
+![Image text](https://github.com/pitt1997/seckill_idea/blob/master/showimgs/goodsdetail.png)
 
 商品秒杀倒计时
 
-![Image text](https://github.com/pitt1997/miaosha_idea/blob/master/showimgs/wait.png)
+![Image text](https://github.com/pitt1997/seckill_idea/blob/master/showimgs/wait.png)
 
 成功秒杀页面
 
-![Image text](https://github.com/pitt1997/miaosha_idea/blob/master/showimgs/miaoshasuccess.png)
+![Image text](https://github.com/pitt1997/seckill_idea/blob/master/showimgs/seckillsuccess.png)
 
 ## 更多知识
 个人博客： https://blog.csdn.net/brad_pitt7

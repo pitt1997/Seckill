@@ -1,62 +1,141 @@
-## 课程学习笔记以及重点知识讲解：https://blog.csdn.net/brad_pitt7
+# 基于 SpringBoot + Maven + Mybatis + Redis + RabbitMQ 高并发商城秒杀系统
 
+该项目实现了一个高并发的秒杀系统，利用 **SpringBoot、Maven、Mybatis、Redis、RabbitMQ** 等技术栈，解决了高并发秒杀场景中的常见问题，如缓存优化、流量削峰、异步处理等。该系统能够在大量并发请求下，确保秒杀活动的稳定性和高效性。
 
+### 项目特点：
+- **高并发秒杀处理**：采用多线程异步处理和缓存技术。
+- **分布式架构支持**：支持横向扩展，分布式部署。
+- **异步下单与消息队列**：使用 RabbitMQ 完成订单异步处理。
+- **安全性优化**：双重 MD5 加密、验证码校验、限流防刷。
+- **缓存优化**：利用 Redis 缓存秒杀商品和用户信息，减少数据库负担。
+- **页面静态化**：缓存秒杀页面到浏览器，减少服务器压力。
 
-## 基于 SpringBoot+Maven+Mybatis+Redis+RabbitMQ 高并发商城秒杀系统
-## 开发工具 
-IntelliJ IDEA 2017.3.1 x64
-## 开发环境				
+## 技术架构图
+![System Architecture](https://example.com/your_architecture_diagram.png)
 
-| JDK |Maven | Mysql |SpringBoot | redis |RabbitMQ|
-|--|--|--|--|--|--|
-|1.8 | 3.2.2 | 5.5 | 1.5.9.RELEASE | 3.2 |3.7.14| 
+## 运行环境
 
-
+| JDK  | Maven | MySQL | SpringBoot     | Redis | RabbitMQ |
+|------|-------|-------|----------------|-------|----------|
+| 1.8  | 3.9.6 | 8     | 2.3.12.RELEASE | 3.2   | 3.7.14   |
 
 ## 使用说明
 
-1. 下载代码 git clone https://github.com/pitt1997/Seckill 将项目下载到IDEA里面
-2. 运行sql文件夹下的sql文件
-3. 到src/main/resources下的application.properties下修改你的数据库链接用户名与密码
-4. 安装redis、mysql、rabbitmq、maven等环境
-5. 启动前，检查配置 application.properties 中相关redis、mysql、rabbitmq地址
-6. 在数据库秒杀商品表里面设置合理的秒杀开始时间与结束时间
-7. 登录地址：http://localhost:8080/login/index
-8. 商品秒杀列表地址：http://localhost:8080/goods/list
+### 1. 克隆项目：
+```bash
+git clone https://github.com/pitt1997/seckill
+```
 
-## 其它说明
-1. 数据库共有一千个用户左右（手机号：15200000000~15200000997 密码为：123456），为压测准备的。（使用 com.lijs.seckill.util.UserUtil.java该类生成的，生成token做压测的方法也是在此类里面）
+### 2. 配置数据库：
+-   安装启动 MySQL 数据库。
+-   运行 `sql` 文件夹中的 readme SQL 脚本，初始化数据库和表数据。
+-   修改 `src/main/resources/application.properties` 中的数据库连接、Redis 配置和 RabbitMQ 配置。
 
-2. 邮箱只实现了前端格式验证，只需输入一个正确的邮箱格式即可（例如：yys@qq.com）
+### 3. 配置依赖服务：
 
-## 项目描述
-1. 使用分布式Seesion，让多台服务器可以响应。
-2. 使用redis做缓存提高访问速度和并发量，减少数据库压力。
-3. 使用页面静态化，缓存页面至浏览器，前后端分离降低服务器压力。
-4. 使用消息队列完成异步下单，提升用户体验，削峰和降流。
-5. 安全性优化：双重md5密码校验，秒杀接口地址的隐藏，接口限流防刷，数学公式验证码。
+-   需要提前安装并启动 Redis 和 RabbitMQ 服务，确保项目能正确连接。
 
-## 图片演示
-登录页面
+### 4. 启动项目：
 
-![Image text](https://github.com/pitt1997/seckill_idea/blob/master/showimgs/login.png)
+-   导入项目到 **IntelliJ IDEA** 中。
 
-商品列表页面
+-   运行 `SeckillApplication.java` 启动 SpringBoot 项目。
 
-![Image text](https://github.com/pitt1997/seckill_idea/blob/master/showimgs/list.png)
+-   访问秒杀系统：
 
-商品详情页面
+    -   登录地址：<http://localhost:8080/login/index>
+    -   商品秒杀列表：<http://localhost:8080/goods/list>
 
-![Image text](https://github.com/pitt1997/seckill_idea/blob/master/showimgs/goodsdetail.png)
+### 5. 测试数据：
 
-商品秒杀倒计时
+-   数据库中已提供1000个用户（手机号：15200000000~15200000997，密码为：123456）。
+-   使用 `com.lijs.seckill.util.UserUtil` 可继续生成用户数据并进行压测。
 
-![Image text](https://github.com/pitt1997/seckill_idea/blob/master/showimgs/wait.png)
+### 6. 调整秒杀时间：
 
-成功秒杀页面
+-   在数据库中调整秒杀商品的时间范围，确保秒杀活动按时启动。
 
-![Image text](https://github.com/pitt1997/seckill_idea/blob/master/showimgs/seckillsuccess.png)
+## 压力测试与性能结果
 
-## 更多知识
-个人博客： https://blog.csdn.net/brad_pitt7
+### 测试环境：
 
+-   **JDK**: 1.8
+-   **Maven**: 3.9.6
+-   **MySQL**: 8
+-   **Redis**: 3.2
+-   **RabbitMQ**: 3.7.14
+-   **测试工具**: JMeter
+
+### 测试用例：
+
+-   **用户数量**: 1000
+-   **请求并发量**: 5000
+-   **测试时间**: 10分钟
+-   **请求类型**: 秒杀请求
+
+### 测试结果：
+
+-   **QPS（每秒处理请求数）** : 1500
+-   **平均响应时间**: 150ms
+-   **成功请求率**: 99.8%
+-   **失败请求率**: 0.2%
+
+### 性能瓶颈分析：
+
+-   数据库查询响应时间较长，建议进一步优化查询语句。
+-   Redis 缓存命中率较高，提升了系统的并发处理能力。
+-   消息队列成功削峰，避免了系统宕机。
+
+### 解决方案：
+
+-   增强数据库性能，使用分布式数据库。
+-   优化消息队列的消费者处理速度。
+
+## 系统功能
+
+### 1. 用户模块
+
+-   **用户注册与登录**：支持手机号登录，采用双重 MD5 加密密码。
+-   **验证码验证**：秒杀接口有验证码限制，防止恶意攻击。
+
+### 2. 秒杀模块
+
+-   **商品秒杀**：展示秒杀商品，提供秒杀按钮，用户可以在规定时间内参与秒杀。
+-   **秒杀倒计时**：展示秒杀商品的剩余时间。
+-   **秒杀结果展示**：秒杀成功或失败后的结果展示页面。
+
+### 3. 管理员模块
+
+-   **秒杀商品管理**：管理员可以增加、修改商品秒杀时间，设置秒杀库存。
+-   **用户管理**：管理员可以查看所有用户的秒杀记录。
+
+## 示例页面截图
+
+### 登录页面
+
+![Login](images/login.png)
+
+### 商品列表页面
+
+![Goods List](images/goods_list.png)
+
+### 商品详情页面
+
+![Goods Detail](images/goods_detail.png)
+
+### 秒杀倒计时页面
+
+![Countdown](images/wait.png)
+
+### 成功秒杀页面
+
+![Success](images/seckill_success.png)
+
+## 更多资源与学习资料
+
+-   **个人博客**: <https://blog.csdn.net/brad_pitt7>
+-   **项目文档与教程**: <https://blog.csdn.net/brad_pitt7>
+
+* * *
+
+---

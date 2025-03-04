@@ -18,12 +18,11 @@ public class MQSender {
     /**
      * 发送秒杀信息，使用derict模式的交换机。（包含秒杀用户信息，秒杀商品id）
      */
-    public void sendMiaoshaMessage(SeckillMessage mmessage) {
-        // 将对象转换为字符串
-        String msg = RedisService.beanToString(mmessage);
+    public void sendSeckillMessage(SeckillMessage message) {
+        String msg = RedisService.beanToString(message);
         logger.info("send message:{}", msg);
         // 第一个参数队列的名字，第二个参数发出的信息
-        amqpTemplate.convertAndSend(MQConfig.MIAOSHA_QUEUE, msg);
+        amqpTemplate.convertAndSend(MQConfig.SECKILL, msg);
     }
 
 

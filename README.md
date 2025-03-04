@@ -21,11 +21,11 @@ IntelliJ IDEA 2017.3.1 x64
 4. 安装redis、mysql、rabbitmq、maven等环境
 5. 启动前，检查配置 application.properties 中相关redis、mysql、rabbitmq地址
 6. 在数据库秒杀商品表里面设置合理的秒杀开始时间与结束时间
-7. 登录地址：http://localhost:8080/login/to_login
-8. 商品秒杀列表地址：http://localhost:8080/goods/to_list
+7. 登录地址：http://localhost:8080/login/index
+8. 商品秒杀列表地址：http://localhost:8080/goods/list
 
 ## 其它说明
-1. 数据库共有一千个用户左右（手机号：15200000000~15200000997 密码为：123456），为压测准备的。（使用 com.lijs.miaosha.util.UserUtil.java该类生成的，生成token做压测的方法也是在此类里面）
+1. 数据库共有一千个用户左右（手机号：15200000000~15200000997 密码为：123456），为压测准备的。（使用 com.lijs.seckill.util.UserUtil.java该类生成的，生成token做压测的方法也是在此类里面）
 
 2. 邮箱只实现了前端格式验证，只需输入一个正确的邮箱格式即可（例如：yys@qq.com）
 

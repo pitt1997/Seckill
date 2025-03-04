@@ -9,6 +9,7 @@ public class GoodsVo extends Goods {
     private Integer stockCount;
     private Date startDate;
     private Date endDate;
+    private Integer version;
     private Double seckillPrice;
 
     public Double getSeckillPrice() {
@@ -43,4 +44,11 @@ public class GoodsVo extends Goods {
         this.endDate = endDate;
     }
 
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 }

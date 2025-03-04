@@ -2,8 +2,8 @@ package com.lijs.seckill.service;
 
 import com.lijs.seckill.dao.SeckillUserDao;
 import com.lijs.seckill.domain.SeckillUser;
-import com.lijs.seckill.redis.SeckillUserKey;
 import com.lijs.seckill.redis.RedisService;
+import com.lijs.seckill.redis.SeckillUserKey;
 import com.lijs.seckill.result.ResultCode;
 import com.lijs.seckill.util.MD5Util;
 import com.lijs.seckill.util.UUIDUtil;
@@ -79,21 +79,19 @@ public class SeckillUserService {
             return ResultCode.MOBILE_NOT_EXIST.getMsg();
         }
         // 手机号存在则验证密码，获取数据库里面的密码与salt去验证
-        // 111111 -> e5d22cfc746c7da8da84e0a996e0fffa
+        // eg. 111111 -> e5d22cfc746c7da8da84e0a996e0fffa
         String dbPass = user.getPwd();
         String dbSalt = user.getSalt();
-        logger.info("dbPass:" + dbPass + "   dbSalt:" + dbSalt);
+        logger.info("dbPass:{}   dbSalt:{}", dbPass, dbSalt);
         // 验证密码，计算二次MD5出来的pass是否与数据库一致
-        String tmppass = MD5Util.formPassToDBPass(password, dbSalt);
-        System.out.println("formPass:" + password);
-        System.out.println("tmppass:" + tmppass);
-        if (!tmppass.equals(dbPass)) {
+        String tmpPass = MD5Util.formPassToDBPass(password, dbSalt);
+        logger.info("formPass:{}   tmpPass:{}", password, tmpPass);
+        if (!tmpPass.equals(dbPass)) {
             return ResultCode.PASSWORD_ERROR.getMsg();
         }
-        //生成cookie
+        // 生成cookie
         String token = UUIDUtil.uuid();
         addCookie(user, token, response);
-//		return CodeMsg.SUCCESS;
         return token;
     }
 
@@ -101,28 +99,27 @@ public class SeckillUserService {
         if (loginVo == null) {
             return ResultCode.SERVER_ERROR;
         }
-        //经过了依次MD5的密码
+        // 经过一次MD5的密码
         String mobile = loginVo.getMobile();
         String formPass = loginVo.getPassword();
-        //判断手机号是否存在
+        // 判断手机号是否存在
         SeckillUser user = getById(Long.parseLong(mobile));
-        //查询不到该手机号的用户
+        // 查询不到该手机号的用户
         if (user == null) {
             return ResultCode.MOBILE_NOT_EXIST;
         }
-        //手机号存在的情况，验证密码，获取数据库里面的密码与salt去验证
-        //111111--->e5d22cfc746c7da8da84e0a996e0fffa
+        // 手机号存在的情况，验证密码，获取数据库里面的密码与salt去验证
+        // eg. 111111--->e5d22cfc746c7da8da84e0a996e0fffa
         String dbPass = user.getPwd();
         String dbSalt = user.getSalt();
-        System.out.println("dbPass:" + dbPass + "   dbSalt:" + dbSalt);
-        //验证密码，计算二次MD5出来的pass是否与数据库一致
-        String tmppass = MD5Util.formPassToDBPass(formPass, dbSalt);
-        System.out.println("formPass:" + formPass);
-        System.out.println("tmppass:" + tmppass);
-        if (!tmppass.equals(dbPass)) {
+        logger.info("dbPass:{}, dbSalt:{}", dbPass, dbSalt);
+        // 验证密码，计算二次MD5出来的pass是否与数据库一致
+        String tmpPass = MD5Util.formPassToDBPass(formPass, dbSalt);
+        logger.info("formPass:{}, tmpPass:{}", formPass, tmpPass);
+        if (!tmpPass.equals(dbPass)) {
             return ResultCode.PASSWORD_ERROR;
         }
-        //生成cookie
+        // 生成cookie
         String token = UUIDUtil.uuid();
         addCookie(user, token, response);
         return ResultCode.SUCCESS;

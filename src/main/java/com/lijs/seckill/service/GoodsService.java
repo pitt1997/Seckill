@@ -3,6 +3,8 @@ package com.lijs.seckill.service;
 import com.lijs.seckill.dao.GoodsDao;
 import com.lijs.seckill.domain.SeckillGoods;
 import com.lijs.seckill.vo.GoodsVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,8 @@ import java.util.List;
 
 @Service
 public class GoodsService {
+
+    private final Logger logger = LoggerFactory.getLogger(GoodsService.class);
 
     @Autowired
     private GoodsDao goodsDao;
@@ -22,20 +26,14 @@ public class GoodsService {
         return goodsDao.getGoodsVoByGoodsId(goodsId);
     }
 
-    public void reduceStock(GoodsVo goodsvo) {
-        SeckillGoods goods = new SeckillGoods();
-        goods.setGoodsId(goodsvo.getId());
-        goodsDao.reduceStock(goods);
-    }
-
     /**
-     * 考虑有可能下单失败的情况,下单失败那么就不去
+     * 考虑减少库存失败的时候，不进行写入订单
      */
-    public boolean reduceStockRes(GoodsVo goodsvo) {
+    public boolean reduceStock(GoodsVo goodsVo) {
         SeckillGoods goods = new SeckillGoods();
-        goods.setGoodsId(goodsvo.getId());
+        goods.setGoodsId(goodsVo.getId());
         int ret = goodsDao.reduceStock(goods);
-        System.out.println("reduceStock1:" + ret);
+        logger.info("reduceStock result: {}", ret);
         return ret > 0;
     }
 }

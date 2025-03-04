@@ -39,8 +39,8 @@ git clone https://github.com/pitt1997/Seckill
 
 -   访问秒杀系统：
 
-    -   登录地址：<http://localhost:8080/login/to_login>
-    -   商品秒杀列表：<http://localhost:8080/goods/to_list>
+    -   登录地址：<http://localhost:8080/login/index>
+    -   商品秒杀列表：<http://localhost:8080/goods/list>
 
 ### 4. 配置 Redis 和 RabbitMQ：
 
@@ -49,7 +49,7 @@ git clone https://github.com/pitt1997/Seckill
 ### 5. 测试数据：
 
 -   数据库中已提供1000个用户（手机号：15200000000~15200000997，密码为：123456）。
--   使用 `com.lijs.miaosha.util.UserUtil` 生成用户数据并进行压测。
+-   使用 `com.lijs.seckill.util.UserUtil` 生成用户数据并进行压测。
 
 ### 6. 调整秒杀时间：
 

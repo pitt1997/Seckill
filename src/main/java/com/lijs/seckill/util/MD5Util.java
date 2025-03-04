@@ -18,7 +18,8 @@ public class MD5Util {
     public static String inputPassToFormPass(String inputPass) {
         String str = "" + salt.charAt(0) + salt.charAt(2) + inputPass + salt.charAt(5) + salt.charAt(4);
         System.out.println(md5(str));
-        return md5(str);            //char类型计算会自动转换为int类型
+        // char类型计算会自动转换为int类型
+        return md5(str);
     }
 
     // 二次MD5
@@ -31,8 +32,7 @@ public class MD5Util {
     public static String inputPassToDbPass(String input, String saltDB) {
         String formPass = inputPassToFormPass(input);
         System.out.println(formPass);
-        String dbPass = formPassToDBPass(formPass, saltDB);
-        return dbPass;
+        return formPassToDBPass(formPass, saltDB);
     }
 
     public static void main(String[] args) {

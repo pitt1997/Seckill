@@ -23,27 +23,28 @@ public class LoginController {
 
     private final Logger logger = (Logger) LoggerFactory.getLogger(Logger.class);
 
-    @RequestMapping("/to_login")
+    @RequestMapping("/index")
     public String toLogin() {
         // 返回页面login
+        logger.info("跳转登录首页...");
         return "login";
     }
 
-    @RequestMapping("/do_login_test")
+    @RequestMapping("/token_test")
     @ResponseBody
     public Result<String> doLoginTest(HttpServletResponse response, @Valid LoginVo loginVo) {
         String token = seckillUserService.loginTest(response, loginVo);
         return Result.success(token);
     }
 
-    @RequestMapping("/do_login")//作为异步操作
+    @RequestMapping("/do_login")
     @ResponseBody
     public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo) {
-        ResultCode cm = seckillUserService.login(response, loginVo);
-        if (cm.getCode() == 0) {
+        ResultCode resultCode = seckillUserService.login(response, loginVo);
+        if (resultCode.getCode() == 0) {
             return Result.success(true);
         } else {
-            return Result.error(cm);
+            return Result.error(resultCode);
         }
     }
 }

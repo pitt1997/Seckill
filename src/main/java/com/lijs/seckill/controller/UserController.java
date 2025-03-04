@@ -36,20 +36,20 @@ public class UserController {
         // 秒杀状态量
         int status;
         // 开始时间倒计时
-        int remailSeconds;
+        int remainingSeconds;
         // 查看当前秒杀状态
         if (now < start) { // 秒杀还未开始 倒计时
             status = 0;
-            remailSeconds = (int) ((start - now) / 1000);  // 毫秒转为秒
+            remainingSeconds = (int) ((start - now) / 1000);  // 毫秒转为秒
         } else if (now > end) { // 秒杀已经结束
             status = 2;
-            remailSeconds = -1;  // 毫秒转为秒
-        } else {//秒杀正在进行
+            remainingSeconds = -1;  // 毫秒转为秒
+        } else { // 秒杀正在进行
             status = 1;
-            remailSeconds = 0;  // 毫秒转为秒
+            remainingSeconds = 0;  // 毫秒转为秒
         }
         model.addAttribute("status", status);
-        model.addAttribute("remailSeconds", remailSeconds);
+        model.addAttribute("remainingSeconds", remainingSeconds);
         return "goods_detail";
     }
 

@@ -1,10 +1,13 @@
 package com.lijs.seckill.redis;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 @Component
-@ConfigurationProperties(prefix = "redis")//将application.properties里面前缀redis都读取
+@ConfigurationProperties(prefix = "redis")
 public class RedisConfig {
     private String host;
     private int port;
@@ -12,6 +15,7 @@ public class RedisConfig {
     private String password;
     private int poolMaxTotal;
     private int poolMaxldle;
+    private int poolMinldle;
     private int poolMaxWait;
 
     public String getHost() {
@@ -70,4 +74,11 @@ public class RedisConfig {
         this.poolMaxWait = poolMaxWait;
     }
 
+    public int getPoolMinldle() {
+        return poolMinldle;
+    }
+
+    public void setPoolMinldle(int poolMinldle) {
+        this.poolMinldle = poolMinldle;
+    }
 }

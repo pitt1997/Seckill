@@ -11,7 +11,7 @@ public class GoodsDetailVo {
     // 秒杀状态量
     private int status = 0;
     // 开始时间倒计时
-    private int remailSeconds = 0;
+    private int remainingSeconds = 0;
     private GoodsVo goodsVo;
     private SeckillUser user;
 
@@ -23,12 +23,12 @@ public class GoodsDetailVo {
         this.status = status;
     }
 
-    public int getRemailSeconds() {
-        return remailSeconds;
+    public int getremainingSeconds() {
+        return remainingSeconds;
     }
 
-    public void setRemailSeconds(int remailSeconds) {
-        this.remailSeconds = remailSeconds;
+    public void setremainingSeconds(int remainingSeconds) {
+        this.remainingSeconds = remainingSeconds;
     }
 
     public GoodsVo getGoodsVo() {

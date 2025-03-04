@@ -1,13 +1,11 @@
 package com.lijs.seckill.controller;
 
-import com.lijs.seckill.config.UserArgumentResolver;
 import com.lijs.seckill.domain.User;
 import com.lijs.seckill.redis.RedisService;
 import com.lijs.seckill.redis.UserKey;
 import com.lijs.seckill.result.Result;
 import com.lijs.seckill.result.ResultCode;
 import com.lijs.seckill.service.UserService;
-import groovy.util.logging.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

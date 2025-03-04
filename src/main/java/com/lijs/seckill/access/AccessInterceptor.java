@@ -86,12 +86,17 @@ public class AccessInterceptor extends HandlerInterceptorAdapter {
     }
 
     private SeckillUser getUser(HttpServletRequest request, HttpServletResponse response) {
+        // 通过支持解析参数或者请求头中的Token来支撑分布式Session（Session存储在redis，不同的请求只要带上token就可以进行会话）
         String paramToken = request.getParameter(SeckillUserService.COOKIE_NAME_TOKEN);
+        String headerToken = request.getHeader("Authorization");
+        logger.info("paramToken:{}", paramToken);
+        // 获取cookie
         String cookieToken = getCookieValue(request, SeckillUserService.COOKIE_NAME_TOKEN);
-        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
+        logger.info("cookieToken:{}", cookieToken);
+        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken) && StringUtils.isEmpty(headerToken)) {
             return null;
         }
-        String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
+        String token = StringUtils.isEmpty(headerToken) ? (StringUtils.isEmpty(paramToken) ? cookieToken : paramToken) : headerToken;
         return seckillUserService.getByToken(token, response);
     }
 

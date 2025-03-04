@@ -132,9 +132,8 @@ git clone https://github.com/pitt1997/seckill
 ![Success](images/seckill_success.png)
 
 ## 更多资源与学习资料
-
--   **个人博客**: <https://blog.csdn.net/brad_pitt7>
--   **项目文档与教程**: <https://blog.csdn.net/brad_pitt7>
+- [个人博客](https://blog.csdn.net/brad_pitt7)
+- [项目文档与教程](https://blog.csdn.net/brad_pitt7)
 
 * * *
 
